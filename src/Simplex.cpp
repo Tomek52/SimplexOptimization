@@ -1,6 +1,11 @@
 #include "Simplex.hpp"
 
-std::string Simplex::SimplexTest() const
+std::vector<double> Simplex::getObjectiveFunction() const
 {
-    return "Simplex test";
+    return objectiveFunction;
+}
+
+void Simplex::setObjectiveFunction(std::vector<double> objectiveFunction)
+{
+    this->objectiveFunction = objectiveFunction;
 }
