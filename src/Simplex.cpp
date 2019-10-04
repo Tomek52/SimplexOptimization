@@ -31,3 +31,12 @@ bool Simplex::checkObjectiveFunctionIsSolvableByDualSimplex() const
         return false;
     else return true;
 }
+
+bool Simplex::checkSolutionIsOptimal() const
+{
+    if(constraintFunctions.empty()) return true;
+    else if(std::any_of(constraintFunctions.begin(), constraintFunctions.end(),
+        [](const auto& iterator) { return iterator.at(0)<0; }))
+        return false;
+    else return true;
+}

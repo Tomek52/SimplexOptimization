@@ -13,4 +13,5 @@ class Simplex
     std::vector<double> getConstraintFunction(int functionNumber) const;
     void addConstraintFunction(std::vector<double> newConstraintFunction);
     bool checkObjectiveFunctionIsSolvableByDualSimplex() const;
+    bool checkSolutionIsOptimal() const;
 };
