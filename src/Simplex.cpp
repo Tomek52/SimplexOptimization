@@ -1,4 +1,5 @@
 #include "Simplex.hpp"
+#include <algorithm>
 
 std::vector<double> Simplex::getObjectiveFunction() const
 {
@@ -12,7 +13,7 @@ void Simplex::setObjectiveFunction(std::vector<double> objectiveFunction)
 
 std::vector<double> Simplex::getConstraintFunction(int functionNumber) const
 {
-    if(constraintFunctions.size() == 0 or constraintFunctions.size() < functionNumber) 
+    if(constraintFunctions.empty() or constraintFunctions.size() < functionNumber) 
         return {};
     return constraintFunctions[functionNumber];
 }
@@ -20,4 +21,13 @@ std::vector<double> Simplex::getConstraintFunction(int functionNumber) const
 void Simplex::addConstraintFunction(std::vector<double> newConstraintFunction)
 {
     constraintFunctions.emplace_back(newConstraintFunction);
+}
+
+bool Simplex::checkObjectiveFunctionIsSolvableByDualSimplex() const
+{
+    if(objectiveFunction.empty()) return false;
+    else if(std::any_of(objectiveFunction.begin(), objectiveFunction.end(), 
+        [](const auto& iterator){ return iterator<0; }))
+        return false;
+    else return true;
 }
