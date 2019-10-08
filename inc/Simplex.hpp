@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <utility>
 
 class Simplex
 {
@@ -13,4 +14,8 @@ class Simplex
     std::vector<double> getConstraintFunction(int functionNumber) const;
     void addConstraintFunction(std::vector<double> newConstraintFunction);
     bool checkObjectiveFunctionIsSolvableByDualSimplex() const;
+    bool checkSolutionIsOptimal() const;
+    int findValueEq0InObjectiveFunction();
+    bool checkIfSetOfSolutionsIsUnconstrained();
+    std::pair<int, int> findCenterPointForPrimalSimplex();
 };
