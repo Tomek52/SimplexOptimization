@@ -42,9 +42,12 @@ else (UNIX)
 endif (UNIX)
 
 set(TEST_SRC_LIST
-    test/SimplexTest.cpp
-  	test/test_main.cpp
+    test/test_main.cpp
+    test/SimplexTestSuite.cpp
+    test/CenterPointTestSuite.cpp
 )
+
+include_directories(test/inc)
 link_libraries(gtest)
 add_executable(${PROJECT_NAME}-ut ${TEST_SRC_LIST})
 target_link_libraries(${PROJECT_NAME}-ut ${PROJECT_NAME}-lib)
