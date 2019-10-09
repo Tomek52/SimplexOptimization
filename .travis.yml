@@ -1,6 +1,7 @@
 sudo: required
 language: cpp
 dist: trusty
+os: linux
 
 before_install:
     # C++17
@@ -11,9 +12,7 @@ install:
     # C++17
     - sudo apt-get install -qq g++-6
     - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
-
-os:
-    - linux
+    - sudo pip install codecov
 
 compiler:
     - g++
@@ -26,3 +25,11 @@ script:
     - make
     - ./Simplex
     - ./Simplex-ut
+
+after_success:
+    - cd ${TRAVIS_BUILD_DIR}
+    - lcov --directory . --capture --output-file coverage.info # capture coverage info
+    - lcov --remove coverage.info '/usr/*' --output-file coverage.info # filter out system
+    - lcov --list coverage.info #debug info
+    # Uploading report to CodeCov
+- bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
