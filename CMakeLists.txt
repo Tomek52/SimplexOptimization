@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8) 
+cmake_minimum_required(VERSION 3.8)
 
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
@@ -26,7 +26,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(Simplex)
 
-set(SRC_LIST 
+set(SRC_LIST
     src/Simplex.cpp
     )
 

@@ -8,6 +8,7 @@ class Simplex
     private:
     std::vector<double> objectiveFunction;
     std::vector<std::vector<double>> constraintFunctions;
+
     public:
     std::vector<double> getObjectiveFunction() const;
     void setObjectiveFunction(std::vector<double> objectiveFunction);
