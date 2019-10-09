@@ -13,7 +13,7 @@ void Simplex::setObjectiveFunction(std::vector<double> objectiveFunction)
     this->objectiveFunction = objectiveFunction;
 }
 
-std::vector<double> Simplex::getConstraintFunction(int functionNumber) const
+std::vector<double> Simplex::getConstraintFunction(unsigned int functionNumber) const
 {
     if(constraintFunctions.empty() or constraintFunctions.size() < functionNumber)
         return {};
