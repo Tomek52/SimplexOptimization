@@ -61,12 +61,12 @@ bool Simplex::checkIfSetOfSolutionsIsUnconstrained(const int& secondCoordinateOf
 
 }
 
-std::pair<int, int> Simplex::findCenterPointForPrimalSimplex()
+std::pair<int, int> Simplex::findCenterPointForPrimalSimplex(const int& secondCoordinateOfCenterPoint)
 {
     double minValue = INT_MAX;
     double newMinValue = 0;
-    int indexOfConstraintFunction = 0;
-    auto centerPoint = std::make_pair(indexOfConstraintFunction, findValueEq0InObjectiveFunction());
+    int firstCoordinateOfCenterPoint = 0;
+    auto centerPoint = std::make_pair(firstCoordinateOfCenterPoint, secondCoordinateOfCenterPoint);
 
     for(const auto& constraintFunction : constraintFunctions)
     {
@@ -76,10 +76,10 @@ std::pair<int, int> Simplex::findCenterPointForPrimalSimplex()
             if(newMinValue<minValue)
             {
                 minValue = newMinValue;
-                centerPoint.first = indexOfConstraintFunction;
+                centerPoint.first = firstCoordinateOfCenterPoint;
             }
         }
-        indexOfConstraintFunction++;
+        firstCoordinateOfCenterPoint++;
     }
     return centerPoint;
 }

@@ -1,3 +1,4 @@
+#pragma once
 #include <gtest/gtest.h>
 #include "Simplex.hpp"
 
@@ -36,7 +37,7 @@ struct testSimplexFindCenterPointParametersTestsFixture :
         public ::testing::WithParamInterface<std::tuple<
                                                 std::pair<int, int>,
                                                 std::vector<std::vector<double>>,
-                                                std::vector<double>
+                                                int
                                             >>
 {
 };

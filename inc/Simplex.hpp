@@ -17,5 +17,5 @@ class Simplex
     bool checkSolutionIsOptimal() const;
     int findValueEq0InObjectiveFunction();
     bool checkIfSetOfSolutionsIsUnconstrained(const int& secondCoordinateOfCenterPoint) const;
-    std::pair<int, int> findCenterPointForPrimalSimplex();
+    std::pair<int, int> findCenterPointForPrimalSimplex(const int& secondCoordinateOfCenterPoint);
 };

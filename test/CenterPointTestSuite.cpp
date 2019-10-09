@@ -50,8 +50,8 @@ INSTANTIATE_TEST_CASE_P(
         cenetrPointConstraintFunctionsAndObjectiveFunctionParams,
         testSimplexFindCenterPointParametersTestsFixture,
         ::testing::Values(
-                std::make_tuple(std::make_pair(1,1), generateConstraintFunctionsParams(1), std::vector<double> {-3, 0, 4}),
-                std::make_tuple(std::make_pair(2,2), generateConstraintFunctionsParams(2), std::vector<double> {-5, 1, 0})
+                std::make_tuple(std::make_pair(1,1), generateConstraintFunctionsParams(1), 1),
+                std::make_tuple(std::make_pair(2,2), generateConstraintFunctionsParams(2), 2)
                 ));
 
 TEST_P(testSimplexFindCenterPointParametersTestsFixture, givenCorrectParamsFindCenterPointForPrimalSimplexShouldReturnExpectedCoordinates) {
@@ -61,8 +61,8 @@ TEST_P(testSimplexFindCenterPointParametersTestsFixture, givenCorrectParamsFindC
     {
         simplex.addConstraintFunction(constraintFunction);
     }
-    simplex.setObjectiveFunction(std::get<2>(GetParam()));
-    ASSERT_EQ(expected, simplex.findCenterPointForPrimalSimplex());
+    int secondCoordinateOfCenterPoint = std::get<2>(GetParam());
+    ASSERT_EQ(expected, simplex.findCenterPointForPrimalSimplex(secondCoordinateOfCenterPoint));
 }
 
 std::vector<std::vector<double>> generateConstraintFunctionsParams(int numOfParam)
