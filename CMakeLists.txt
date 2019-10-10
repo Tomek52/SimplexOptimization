@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8) 
+cmake_minimum_required(VERSION 3.8)
 
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
@@ -24,9 +24,11 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_CXX_FLAGS "-g -O0 -Wall -Wextra -Wpedantic -fprofile-arcs -ftest-coverage")
+
 project(Simplex)
 
-set(SRC_LIST 
+set(SRC_LIST
     src/Simplex.cpp
     )
 
