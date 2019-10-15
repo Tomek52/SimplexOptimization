@@ -1,8 +1,26 @@
 #include "SimplexTestSuite.hpp"
 #include <vector>
-
+#include<complex>
 std::vector<std::vector<double>> generateConstraintFunctionsParams(int numOfParam);
-
+bool CompareExpectedValueWithValueAfterJordanGaussElimination(
+    std::vector<std::vector<double>> expectedValue, 
+    std::vector<std::vector<double>> testedValue)
+{
+    const double delta = 0.0000000000000000000005;
+    int iFloopIncrement = 0;
+    for(const auto& iterator : expectedValue)
+    {
+        for(const auto& element : iterator)
+        {
+            int jFlopIncrement = 0;
+            if(!(element - testedValue.at(iFloopIncrement).at(jFlopIncrement) < delta))
+                return false;
+            ++jFlopIncrement;
+        }
+        ++iFloopIncrement;
+    }
+    return true;    
+}
 INSTANTIATE_TEST_CASE_P(
         positionOf0AndObjectiveFunctionParams,
         testSimplexFind0InObjectiveFuncParametersTestsFixture,
@@ -22,7 +40,6 @@ INSTANTIATE_TEST_CASE_P(
 TEST_P(testSimplexFind0InObjectiveFuncParametersTestsFixture, shouldReturnPositionOf0) {
     int expected = std::get<0>(GetParam());
     simplex.setObjectiveFunction(std::get<1>(GetParam()));
-
     ASSERT_EQ(expected, simplex.findValueEq0InObjectiveFunction());
 }
 
@@ -91,4 +108,30 @@ std::vector<std::vector<double>> generateConstraintFunctionsParams(int numOfPara
     }
 
     return constraintFunctionsParams;
+}
+
+struct testSimplex : public ::testing::Test
+{
+    //Given
+    Simplex simplex;
+    std::vector<double> emptyVector;
+    std::vector<double> vectorOf2Doubles = {1.43, 2};
+    std::vector<double> vectorOf4Doubles = {3.23, 4, -0.001, 9999999.1234};
+    std::vector<double> vec1 = {5, 1, 1};
+    std::vector<double> vec2 = {0, -1, 1};
+    std::vector<double> vec3 = {21, 6, 2};
+    std::vector<double> obj = {0, -2, -1};
+    std::vector<std::vector<double>> expected = {
+        {1.5, -0.166667, 0.666667},
+        {3.5, 0.166667, 1.33333},
+        {3.5, 0.166667, 0.333333}
+    };
+};
+TEST_F(testSimplex,testGaussJordanElimination)
+{
+    simplex.setObjectiveFunction(obj);
+    simplex.addConstraintFunction(vec1);
+    simplex.addConstraintFunction(vec2);
+    simplex.addConstraintFunction(vec3);
+    ASSERT_TRUE(CompareExpectedValueWithValueAfterJordanGaussElimination(expected, simplex.gauss_Jordan_Elimination({2,1})));
 }

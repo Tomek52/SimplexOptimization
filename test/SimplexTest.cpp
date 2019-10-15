@@ -8,9 +8,7 @@ struct testSimplex : public ::testing::Test
     std::vector<double> emptyVector;
     std::vector<double> vectorOf2Doubles = {1.43, 2};
     std::vector<double> vectorOf4Doubles = {3.23, 4, -0.001, 9999999.1234};
-    
 };
-
 TEST_F(testSimplex, testGetObjectiveFunctionWhenFunctionIsEmpty)
 {   
     //Then 

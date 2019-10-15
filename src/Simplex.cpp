@@ -83,3 +83,52 @@ std::pair<int, int> Simplex::findCenterPointForPrimalSimplex(const int& secondCo
     }
     return centerPoint;
 }
+
+std::vector<std::vector<double>> Simplex::gauss_Jordan_Elimination(std::pair<int, int> centralPoint)
+{
+    std::vector<double> nextObjectiveFunction;
+    std::vector<std::vector<double>> nextConstraintFunctions;
+
+        for(auto iterator = objectiveFunction.begin(); iterator != objectiveFunction.end(); ++iterator)
+        {
+            if(std::distance(objectiveFunction.begin(), iterator) == centralPoint.second)
+            {
+                nextObjectiveFunction.emplace_back(-objectiveFunction.at(centralPoint.second) 
+                / constraintFunctions.at(centralPoint.first).at(centralPoint.second));
+            }
+            else 
+            {
+                nextObjectiveFunction.emplace_back(*iterator - (objectiveFunction.at(centralPoint.second) 
+                * constraintFunctions.at(centralPoint.first).at(std::distance(objectiveFunction.begin(), iterator)) 
+                / constraintFunctions.at(centralPoint.first).at(centralPoint.second)));
+            }
+        }
+        int yCoordinate = 0;
+        nextConstraintFunctions = constraintFunctions;
+        for(auto iterYCoordinate = constraintFunctions.begin(); iterYCoordinate != constraintFunctions.end(); ++iterYCoordinate, ++yCoordinate)
+        {
+            int xCoordinate = 0;
+            for(auto iterXCoordinate = iterYCoordinate->begin(); iterXCoordinate != iterYCoordinate->end(); ++iterXCoordinate, ++xCoordinate)
+            {
+                if(std::distance(iterYCoordinate->begin(), iterXCoordinate) == centralPoint.second && std::distance(constraintFunctions.begin(), iterYCoordinate) == centralPoint.first)
+                { 
+                    nextConstraintFunctions[yCoordinate][xCoordinate] = (1 / double(*iterXCoordinate));
+                } 
+                else if(std::abs((std::distance(iterYCoordinate->begin(), iterXCoordinate))) != centralPoint.second && std::abs(std::distance(constraintFunctions.begin(), iterYCoordinate)) == centralPoint.first)
+                {
+                    nextConstraintFunctions[yCoordinate][xCoordinate] = (double(*iterXCoordinate) / constraintFunctions.at(centralPoint.first).at(centralPoint.second));
+                }
+                else if(std::abs((std::distance(iterYCoordinate->begin(), iterXCoordinate))) == centralPoint.second && std::abs(std::distance(constraintFunctions.begin(), iterYCoordinate)) != centralPoint.first)
+                {
+                    nextConstraintFunctions[yCoordinate][xCoordinate] = (-double(*iterXCoordinate) / constraintFunctions.at(centralPoint.first).at(centralPoint.second));
+                }     
+                else
+                {
+                    nextConstraintFunctions[yCoordinate][xCoordinate] = (*iterXCoordinate - (constraintFunctions[yCoordinate].at(centralPoint.second) * constraintFunctions[centralPoint.first][std::distance(iterYCoordinate->begin(), iterXCoordinate)] / constraintFunctions[centralPoint.first][centralPoint.second]));
+                };
+            }
+        }
+        objectiveFunction = nextObjectiveFunction;
+        constraintFunctions = nextConstraintFunctions;
+       return constraintFunctions;
+}

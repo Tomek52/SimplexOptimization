@@ -19,4 +19,5 @@ class Simplex
     int findValueEq0InObjectiveFunction();
     bool checkIfSetOfSolutionsIsUnconstrained(const int& secondCoordinateOfCenterPoint) const;
     std::pair<int, int> findCenterPointForPrimalSimplex(const int& secondCoordinateOfCenterPoint);
+    std::vector<std::vector<double>> gauss_Jordan_Elimination(std::pair<int, int> centralPoint);
 };
