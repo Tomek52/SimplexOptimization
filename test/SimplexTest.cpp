@@ -1,7 +1,8 @@
 #include <gtest/gtest.h>
 #include "Simplex.hpp"
+#include "SimplexTestSuite.hpp"
 
-struct testSimplex : public ::testing::Test
+struct testSimplexFixture : public ::testing::Test
 {
     //Given
     Simplex simplex;
@@ -9,13 +10,13 @@ struct testSimplex : public ::testing::Test
     std::vector<double> vectorOf2Doubles = {1.43, 2};
     std::vector<double> vectorOf4Doubles = {3.23, 4, -0.001, 9999999.1234};
 };
-TEST_F(testSimplex, testGetObjectiveFunctionWhenFunctionIsEmpty)
+TEST_F(testSimplexFixture, testGetObjectiveFunctionWhenFunctionIsEmpty)
 {   
     //Then 
     ASSERT_EQ(simplex.getObjectiveFunction(), emptyVector);
 }
 
-TEST_F(testSimplex, testSetObjectiveFunctionWhenGivenFunctionIsEmpty)
+TEST_F(testSimplexFixture, testSetObjectiveFunctionWhenGivenFunctionIsEmpty)
 {
     //When
     simplex.setObjectiveFunction(emptyVector);
@@ -23,7 +24,7 @@ TEST_F(testSimplex, testSetObjectiveFunctionWhenGivenFunctionIsEmpty)
     ASSERT_EQ(simplex.getObjectiveFunction(), emptyVector);
 }
 
-TEST_F(testSimplex, testSetObjectiveFunctionWhenGivenFunctionHave2Params)
+TEST_F(testSimplexFixture, testSetObjectiveFunctionWhenGivenFunctionHave2Params)
 {
     //When
     simplex.setObjectiveFunction(vectorOf2Doubles);
@@ -31,14 +32,14 @@ TEST_F(testSimplex, testSetObjectiveFunctionWhenGivenFunctionHave2Params)
     ASSERT_EQ(simplex.getObjectiveFunction(), vectorOf2Doubles);
 }
 
-TEST_F(testSimplex, testGetConstraintFunctionWhenFunctionNumberIsOutOfRange)
+TEST_F(testSimplexFixture, testGetConstraintFunctionWhenFunctionNumberIsOutOfRange)
 {   
     //Then 
     ASSERT_EQ(simplex.getConstraintFunction(0), emptyVector);
     ASSERT_EQ(simplex.getConstraintFunction(5), emptyVector);
 }
 
-TEST_F(testSimplex, testAddConstraintFunctionWhenGivenFunctionHave2Params)
+TEST_F(testSimplexFixture, testAddConstraintFunctionWhenGivenFunctionHave2Params)
 {
     //When
     simplex.addConstraintFunction(vectorOf2Doubles);
@@ -46,7 +47,7 @@ TEST_F(testSimplex, testAddConstraintFunctionWhenGivenFunctionHave2Params)
     ASSERT_EQ(simplex.getConstraintFunction(0), vectorOf2Doubles);
 }
 
-TEST_F(testSimplex, testAdd2ConstraintFunctionWhenGivenFunctionsHaveParams)
+TEST_F(testSimplexFixture, testAdd2ConstraintFunctionWhenGivenFunctionsHaveParams)
 {
     //When
     simplex.addConstraintFunction(vectorOf2Doubles);
@@ -56,13 +57,13 @@ TEST_F(testSimplex, testAdd2ConstraintFunctionWhenGivenFunctionsHaveParams)
     ASSERT_EQ(simplex.getConstraintFunction(1), vectorOf4Doubles);
 }
 
-TEST_F(testSimplex, testCheckObjectiveFunctionIsSolvableByDualSimplexWhenFunctionIsEmpty)
+TEST_F(testSimplexFixture, testCheckObjectiveFunctionIsSolvableByDualSimplexWhenFunctionIsEmpty)
 {
     //Then
     ASSERT_FALSE(simplex.checkObjectiveFunctionIsSolvableByDualSimplex());
 }
 
-TEST_F(testSimplex, testCheckObjectiveFunctionIsSolvableByDualSimplexWhenFunctionParametersAreCorrect)
+TEST_F(testSimplexFixture, testCheckObjectiveFunctionIsSolvableByDualSimplexWhenFunctionParametersAreCorrect)
 {
     //When
     simplex.setObjectiveFunction(vectorOf2Doubles);
@@ -70,7 +71,7 @@ TEST_F(testSimplex, testCheckObjectiveFunctionIsSolvableByDualSimplexWhenFunctio
     ASSERT_TRUE(simplex.checkObjectiveFunctionIsSolvableByDualSimplex());
 }
 
-TEST_F(testSimplex, testCheckObjectiveFunctionIsSolvableByDualSimplexWhenFunctionParametersAreIncorrect)
+TEST_F(testSimplexFixture, testCheckObjectiveFunctionIsSolvableByDualSimplexWhenFunctionParametersAreIncorrect)
 {
     //When
     simplex.setObjectiveFunction(vectorOf4Doubles);
